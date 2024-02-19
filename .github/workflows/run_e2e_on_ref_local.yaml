@@ -49,4 +49,4 @@ jobs:
 
     - name: Build and run E2E
       run: |
-        cd tools/e2e & task init-and-run
+        cd tools/e2e && task init-and-run
