@@ -35,7 +35,7 @@ jobs:
     - name: Validate SHA
       run: |
         HEAD_SHA=$(git rev-parse HEAD) \
-        INPUT_SHA="${{ github.event.inputs.sha }}" && \
+        INPUT_SHA="${{ github.event.inputs.sha }}" \
         [ x"$HEAD_SHA" != x"$INPUT_SHA" ] && echo "The branch was updated since the workflow was triggered, exiting" \
         && exit 1
 
