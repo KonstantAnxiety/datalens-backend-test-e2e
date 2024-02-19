@@ -145,6 +145,7 @@ tasks:
   init-and-run:
     desc: Bootstrap command; install everything and run all tests
     cmds:
+      - cmd: echo "Hello from fork"
       - task: datalens-ui-repo-clone
       - task: datalens-ui-repo-update
       - task: nvm-install
