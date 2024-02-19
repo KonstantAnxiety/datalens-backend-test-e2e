@@ -36,7 +36,7 @@ jobs:
       run: |
         export HEAD_SHA=$(git rev-parse HEAD) && \
         export INPUT_SHA="${{ github.event.inputs.sha }}" && \
-        echo $HEAD_SHA && '
+        echo $HEAD_SHA && \
         [ x"$HEAD_SHA" != x"$INPUT_SHA" ] && echo "The branch was updated since the workflow was triggered, exiting" \
         && exit 1
 
