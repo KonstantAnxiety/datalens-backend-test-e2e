@@ -34,11 +34,13 @@ jobs:
         GH_TOKEN: ${{ github.token }}
     - name: Validate SHA
       run: |
-        export HEAD_SHA=$(git rev-parse HEAD) && \
-        export INPUT_SHA="${{ github.event.inputs.sha }}" && \
-        echo $HEAD_SHA && \
-        [ x"$HEAD_SHA" != x"$INPUT_SHA" ] && echo "The branch was updated since the workflow was triggered, exiting" \
-        && exit 1
+        export HEAD_SHA=$(git rev-parse HEAD)
+        export INPUT_SHA="${{ github.event.inputs.sha }}"
+        echo $HEAD_SHA
+        if [ x"$HEAD_SHA" != x"$INPUT_SHA" ]; then
+          echo "The branch was updated since the workflow was triggered, exiting"
+          exit 1
+        fi
 
     - name: Install Task
       uses: arduino/setup-task@v1
