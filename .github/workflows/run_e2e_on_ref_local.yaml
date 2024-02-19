@@ -51,4 +51,4 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        cd tools/e2e && task init-and-run
+        cd tools/e2e && git clone git@github.com:datalens-tech/datalens-ui.git ../../../../datalens-ui && task init-and-run
