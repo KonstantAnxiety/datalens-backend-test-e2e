@@ -48,5 +48,7 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and run E2E
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         cd tools/e2e && task init-and-run
