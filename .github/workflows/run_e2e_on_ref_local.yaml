@@ -52,4 +52,4 @@ jobs:
 #        GH_TOKEN: ${{ github.token }}
         GH_TOKEN: ${{ secrets.GHA_REPO_TOKEN }}
       run: |
-        cd tools/e2e && git clone git@github.com:datalens-tech/datalens-ui.git ../../../../datalens-ui && task init-and-run
+        cd tools/e2e && git clone https://KonstantAnxiety:${{ secrets.GHA_REPO_TOKEN }}@github.com/datalens-tech/datalens-ui.git ../../../../datalens-ui && task init-and-run
