@@ -49,6 +49,7 @@ jobs:
 
     - name: Build and run E2E
       env:
-        GH_TOKEN: ${{ github.token }}
+#        GH_TOKEN: ${{ github.token }}
+        GH_TOKEN: ${{ secrets.GHA_REPO_TOKEN }}
       run: |
         cd tools/e2e && git clone git@github.com:datalens-tech/datalens-ui.git ../../../../datalens-ui && task init-and-run
