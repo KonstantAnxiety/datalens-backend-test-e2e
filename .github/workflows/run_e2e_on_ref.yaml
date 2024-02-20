@@ -37,7 +37,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     env:
 #      cr_url: "ghcr.io/${{ github.repository_owner }}"  # TODO this
-      cr_url: "ghcr.io/konstantanxiety"
+      cr_url: "ghcr.io/datalens-tech"
     steps:
     - name: Cleanup build folder
       run: |
