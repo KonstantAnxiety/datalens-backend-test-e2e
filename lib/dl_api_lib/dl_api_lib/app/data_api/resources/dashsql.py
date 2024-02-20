@@ -227,6 +227,8 @@ class DashSQLView(BaseView):
         db_params = body.get("db_params")
         connector_specific_params = body.get("connector_specific_params")
 
+        raise RuntimeError("Hello from a real fork you dummy")
+        
         conn = await self.dl_request.us_manager.get_by_id(conn_id, ConnectionBase)
         assert isinstance(conn, ConnectionBase)
 
