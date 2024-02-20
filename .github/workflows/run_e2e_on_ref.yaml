@@ -86,7 +86,8 @@ jobs:
   run_e2e_tests:
     name: "Run E2E tests"
     needs: [ build_backend ]
-    uses: datalens-tech/datalens-backend/.github/workflows/run_e2e.yml@main
+#    uses: datalens-tech/datalens-backend/.github/workflows/run_e2e.yml@main
+    uses: KonstantAnxiety/datalens-backend-test-e2e/.github/workflows/run_e2e.yml@main
     with:
       image_version: ${{ needs.build_backend.outputs.image-version }}
     secrets: inherit
