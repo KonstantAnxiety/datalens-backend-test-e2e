@@ -79,7 +79,7 @@ jobs:
         image_version="${version#"v"}"
         image_url="${{ env.cr_url }}/${{ matrix.image_name }}:${image_version}"
 
-        ./run-project-bake "${bake_target}" --set "${bake_target}.tags=${image_url}"
+        ./run-project-bake "${bake_target}" --push --set "${bake_target}.tags=${image_url}"
 
         echo "image-version=${image_version}" >> $GITHUB_OUTPUT
 
