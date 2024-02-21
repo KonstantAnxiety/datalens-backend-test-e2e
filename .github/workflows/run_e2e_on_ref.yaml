@@ -36,20 +36,33 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     env:
-      cr_url: "ghcr.io/${{ github.repository_owner }}"
+#      cr_url: "ghcr.io/${{ github.repository_owner }}"  # TODO this
+      cr_url: "ghcr.io/datalens-tech"
     steps:
+    - name: Cleanup build folder
+      run: |
+        rm -rf ./* || true
+        rm -rf ./.??* || true
     - name: Checkout code
       uses: actions/checkout@v2
+    - name: Fix dubious ownership
+      run: .github/.scripts/git_config_save_directory.sh
+      env:
+        REPOSITORY_NAME: ${{ github.event.repository.name }}
+
     - name: Switch to PR head
       run: gh pr checkout ${{ github.event.inputs.pr }}
       env:
         GH_TOKEN: ${{ github.token }}
     - name: Validate SHA
       run: |
-        HEAD_SHA=$(git rev-parse HEAD) \
-        INPUT_SHA="${{ github.event.inputs.sha }}" && \
-        [ x"$HEAD_SHA" != x"$INPUT_SHA" ] && echo "The branch was updated since the workflow was triggered, exiting" \
-        && exit 1
+        export HEAD_SHA=$(git rev-parse HEAD)
+        export INPUT_SHA="${{ github.event.inputs.sha }}"
+        echo $HEAD_SHA
+        if [ x"$HEAD_SHA" != x"$INPUT_SHA" ]; then
+          echo "The branch was updated since the workflow was triggered, exiting"
+          exit 1
+        fi
 
     - name: Log in to the Container registry
       uses: docker/login-action@v2
@@ -57,7 +70,6 @@ jobs:
         registry: ${{ env.cr_url }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Build image
       id: build_image
       working-directory: docker_build
@@ -67,15 +79,15 @@ jobs:
         image_version="${version#"v"}"
         image_url="${{ env.cr_url }}/${{ matrix.image_name }}:${image_version}"
 
-        ./run-project-bake "${bake_target}" \
-          --set "${bake_target}.tags=${image_url}"
+        ./run-project-bake "${bake_target}" --push --set "${bake_target}.tags=${image_url}"
 
         echo "image-version=${image_version}" >> $GITHUB_OUTPUT
 
   run_e2e_tests:
     name: "Run E2E tests"
     needs: [ build_backend ]
-    uses: datalens-tech/datalens-backend/.github/workflows/run_e2e.yml@main
+#    uses: datalens-tech/datalens-backend/.github/workflows/run_e2e.yml@main
+    uses: KonstantAnxiety/datalens-backend-test-e2e/.github/workflows/run_e2e.yml@main
     with:
       image_version: ${{ needs.build_backend.outputs.image-version }}
     secrets: inherit
