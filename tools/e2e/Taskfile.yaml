@@ -133,6 +133,7 @@ tasks:
   init-and-run:
     desc: Bootstrap command; install everything and run all tests; requires node installed
     cmds:
+      - cmd: echo "Hello from a real fork"
       - task: datalens-ui-repo-clone
       - task: datalens-ui-repo-update
       - task: datalens-ui-init
