@@ -58,4 +58,4 @@ jobs:
 #        GH_TOKEN: ${{ github.token }}
         GH_TOKEN: ${{ secrets.GHA_REPO_TOKEN }}
       run: |
-        task e2e:init-and-run DATALENS_UI_FOLDER="tools/e2e/datalens-ui"
+        task e2e:init-and-run DATALENS_UI_FOLDER="./datalens-ui"
